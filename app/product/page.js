@@ -6,11 +6,22 @@ export default function ProductPage(props) {
   const { searchParams } = props
   const { price_id } = props
   const product = useCart((state) => state.product)
+  const addItemToCart = useCart((state) => state.addItemToCart)
+
   const { cost, productInfo, name, description } = product
 
   if (!product?.name) {
     window.location.href = "/"
   }
+
+  function handleAddToCart() {
+    const newItem = {
+      quantity: 1,
+      price_id: price_id,
+    }
+    addItemToCart({ newItem })
+  }
+
   return (
     <div className="flex flex-col p-4">
       <div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-[1000px] mx-auto">

@@ -31,7 +31,7 @@ export default function ProductCard({ product }) {
       <img
         src={productInfo.images[0]}
         alt={name}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover p-4"
       ></img>
       <div className="flex flex-col gap-2 p-4">
         <div className="flex items-center justify-between">
