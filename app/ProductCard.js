@@ -2,15 +2,25 @@
 
 import React from "react"
 import { useRouter } from "next/navigation"
+import useCart from "./(store)/store"
 
 export default function ProductCard({ product }) {
   const { id: price_id, unit_amount: cost, product: productInfo } = product
   const { name, description } = productInfo
+  const setProduct = useCart((state) => state.setProduct)
 
   const router = useRouter()
 
   function handleProductClick() {
-    router.push("/product?price_id" + price_id)
+    const newProduct = {
+      name,
+      description,
+      price_id,
+      cost,
+      productInfo,
+    }
+    setProduct({ newProduct })
+    router.push(`/product?price_id=${price_id}`)
   }
 
   return (
