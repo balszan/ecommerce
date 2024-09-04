@@ -1,6 +1,7 @@
 import { Roboto } from "next/font/google"
 import "./globals.css"
 import Link from "next/link"
+import Header from "./Header"
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400", "700"] })
 
@@ -24,14 +25,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${roboto.className} min-h-screen flex flex-col relative`}
       >
-        <header className="sticky top-0 p-6 bg-white shadow-md z-50 text-2xl flex item-center justify-between">
-          <Link href="/">
-            <h1 className="hover:scale-110 cursor-pointer font-bold">
-              FoodShop
-            </h1>
-          </Link>
-          <i className="fa-solid fa-cart-shopping cursor-pointer hover:scale-110"></i>
-        </header>
+        <Header />
         <div className="flex-1">{children}</div>
         <footer className="flex items-center flex-wrap justify-center bg-gray-100 border-t border-solid border-gray-300 p-5 gap-3">
           <p>Karolina Balszan</p>
