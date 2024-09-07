@@ -54,7 +54,7 @@ export default function Modal() {
                     <div key={itemIndex} className="flex flex-col gap-2">
                       <div className="flex items-center justify-between">
                         <h2>{cartItem.name}</h2>
-                        <p>${cartItem.cost / 100}</p>
+                        <p>{cartItem.cost / 100}£</p>
                       </div>
                       <p className="text-slate-600 text-sm">Quantity: 1</p>
                     </div>
