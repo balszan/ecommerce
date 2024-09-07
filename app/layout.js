@@ -32,6 +32,7 @@ export default function RootLayout({ children }) {
           <i className="fa-solid fa-carrot"></i>
           <p> 2024</p>
         </footer>
+        <div id="portal"></div>
       </body>
     </html>
   )

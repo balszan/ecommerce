@@ -38,7 +38,10 @@ export default function ProductPage(props) {
             <p>{cost / 100} £</p>
           </div>
           <p className="text-sm flex-1">{description}</p>
-          <button className="bg-amber-400 text-white hover:bg-slate-500 cursor-pointer ml-auto px-4 py-2">
+          <button
+            className="bg-amber-400 text-white hover:bg-slate-500 cursor-pointer ml-auto px-4 py-2"
+            onClick={handleAddToCart}
+          >
             Add to Cart
           </button>
         </div>
