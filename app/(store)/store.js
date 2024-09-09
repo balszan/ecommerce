@@ -1,59 +1,58 @@
 import { create } from "zustand"
+import { persist, createJSONStorage } from "zustand/middleware"
 
-const useCart = create((set, get) => ({
-  cart: [],
-  product: {},
-  openModal: false,
-  setOpenModal: () => {
-    set((state) => {
-      return {
-        ...state,
-        openModal: !state.openModal,
-      }
-    })
-  },
-  setProduct: (params) => {
-    const { newProduct } = params
-    set((state) => {
-      return {
-        ...state,
-        product: newProduct,
-      }
-    })
-  },
-
-  addItemToCart: (params) => {
-    const { newItem } = params
-    set((state) => {
-      const newCart = [...state.cart, newItem]
-      return {
-        ...state,
-        cart: newCart,
-      }
-    })
-  },
-  removeItemFromCart: (params) => {
-    const { itemIndex } = params
-    set((state) => {
-      const newCart = state.cart.filter((element, elementIndex) => {
-        return elementIndex !== itemIndex
-      })
-      return {
-        ...state,
-        cart: newCart,
-      }
-    })
-  },
-
-  emptyCart: (params) => {
-    set((state) => {
-      const newCart = []
-      return {
-        ...state,
-        cart: newCart,
-      }
-    })
-  },
-}))
+const useCart = create(
+  persist(
+    (set, get) => ({
+      cart: [],
+      product: {},
+      openModal: false,
+      isHydrated: false,
+      setOpenModal: () => {
+        set((state) => ({
+          ...state,
+          openModal: !state.openModal,
+        }))
+      },
+      setProduct: (params) => {
+        const { newProduct } = params
+        set((state) => ({
+          ...state,
+          product: newProduct,
+        }))
+      },
+      addItemToCart: (params) => {
+        const { newItem } = params
+        set((state) => ({
+          ...state,
+          cart: [...state.cart, newItem],
+        }))
+      },
+      removeItemFromCart: (params) => {
+        const { itemIndex } = params
+        set((state) => ({
+          ...state,
+          cart: state.cart.filter(
+            (_, elementIndex) => elementIndex !== itemIndex
+          ),
+        }))
+      },
+      emptyCart: () => {
+        set((state) => ({
+          ...state,
+          cart: [],
+        }))
+      },
+      setHydrated: () => set({ isHydrated: true }),
+    }),
+    {
+      name: "cart-storage",
+      storage: createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        state.setHydrated()
+      },
+    }
+  )
+)
 
 export default useCart

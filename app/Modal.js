@@ -6,12 +6,14 @@ export default function Modal() {
   const [portalRoot, setPortalRoot] = useState(null)
   const closeModal = useCart((state) => state.setOpenModal)
   const cartItems = useCart((state) => state.cart)
+  const openModal = useCart((state) => state.openModal)
+  const isHydrated = useCart((state) => state.isHydrated)
 
   useEffect(() => {
     setPortalRoot(document.getElementById("portal"))
   }, [])
 
-  if (!portalRoot) return null
+  if (!portalRoot || !openModal) return null
 
   return ReactDOM.createPortal(
     <div className="fixed top-0 left-0 w-screen h-screen z-50">
@@ -28,7 +30,9 @@ export default function Modal() {
             ></i>
           </div>
           <div className="p-4 overflow-scroll flex-1 flex flex-col gap-4">
-            {cartItems.length === 0 ? (
+            {!isHydrated ? (
+              <p>Loading...</p>
+            ) : cartItems.length === 0 ? (
               <p>There is nothing in your cart </p>
             ) : (
               <>
@@ -46,7 +50,7 @@ export default function Modal() {
               </>
             )}
           </div>
-          <div className=" bg-amber-400 text-white text-xl m-4 p-4 uppercase grid place-items-center hover:opacity-60 cursor-pointer shadow-lg">
+          <div className="bg-amber-400 text-white text-xl m-4 p-4 uppercase grid place-items-center hover:opacity-60 cursor-pointer shadow-lg">
             Checkout
           </div>
         </div>
