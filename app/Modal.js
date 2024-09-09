@@ -10,13 +10,14 @@ export default function Modal() {
   const openModal = useCart((state) => state.openModal)
   const isHydrated = useCart((state) => state.isHydrated)
   const removeItemFromCart = useCart((state) => state.removeItemFromCart)
+  const updateItemQuantity = useCart((state) => state.updateItemQuantity)
   const router = useRouter()
 
   async function checkout() {
     const lineItems = cartItems.map((cartItem) => {
       return {
         price: cartItem.price_id,
-        quantity: 1,
+        quantity: cartItem.quantity,
       }
     })
     const res = await fetch("/api/checkout", {
@@ -39,14 +40,14 @@ export default function Modal() {
   return ReactDOM.createPortal(
     <div className="fixed top-0 left-0 w-screen h-screen z-50">
       <div onClick={closeModal} className="bg-transparent absolute inset-0">
-        <div className="flex flex-col bg-white absolute right-0 top-0 h-screen w-screen sm:w-96 max-w-screen shadow-lg gap-4">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="flex flex-col bg-white absolute right-0 top-0 h-screen w-screen sm:w-96 max-w-screen shadow-lg gap-4"
+        >
           <div className="flex items-center p-6 justify-between text-xl">
             <h1>Cart</h1>
             <i
-              onClick={(e) => {
-                e.stopPropagation()
-                closeModal()
-              }}
+              onClick={closeModal}
               className="fa-regular fa-rectangle-xmark cursor-pointer hover:opacity-60"
             ></i>
           </div>
@@ -62,16 +63,58 @@ export default function Modal() {
                     <div key={itemIndex} className="flex flex-col gap-2">
                       <div className="flex items-center justify-between">
                         <h2>{cartItem.name}</h2>
-                        <p>{cartItem.cost / 100} £</p>
+                        <p>{(cartItem.cost * cartItem.quantity) / 100} £</p>
                       </div>
                       <div className="flex items-center justify-between items-center">
-                        <p className="text-slate-600 text-sm">Quantity: 1</p>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              updateItemQuantity({
+                                itemIndex,
+                                newQuantity: Math.max(1, cartItem.quantity - 1),
+                              })
+                            }}
+                            className="bg-gray-200 px-2 py-1"
+                          >
+                            -
+                          </button>
+                          <input
+                            type="number"
+                            min="1"
+                            value={cartItem.quantity}
+                            onChange={(e) => {
+                              e.stopPropagation()
+                              updateItemQuantity({
+                                itemIndex,
+                                newQuantity: Math.max(
+                                  1,
+                                  parseInt(e.target.value)
+                                ),
+                              })
+                            }}
+                            className="w-16 text-center"
+                            onClick={(e) => e.stopPropagation()}
+                          />
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              updateItemQuantity({
+                                itemIndex,
+                                newQuantity: cartItem.quantity + 1,
+                              })
+                            }}
+                            className="bg-gray-200 px-2 py-1"
+                          >
+                            +
+                          </button>
+                        </div>
                         <button
                           onClick={(e) => {
                             e.stopPropagation()
                             removeItemFromCart({ itemIndex: itemIndex })
                           }}
-                          className=" text-sm bg-red-400 text-white p-1 hover:bg-red-500 w-[100px] shadow"
+                          className="text-sm bg-red-400 text-white p-1 hover:bg-red-500 w-[100px] shadow"
                         >
                           Remove
                         </button>
@@ -84,7 +127,7 @@ export default function Modal() {
           </div>
           <div
             onClick={checkout}
-            className=" bg-amber-400 text-white text-xl m-4 p-4 uppercase grid place-items-center hover:opacity-60 cursor-pointer shadow-lg"
+            className="bg-amber-400 text-white text-xl m-4 p-4 uppercase grid place-items-center hover:opacity-60 cursor-pointer shadow-lg"
           >
             Checkout
           </div>

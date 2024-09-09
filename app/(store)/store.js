@@ -23,10 +23,20 @@ const useCart = create(
       },
       addItemToCart: (params) => {
         const { newItem } = params
-        set((state) => ({
-          ...state,
-          cart: [...state.cart, newItem],
-        }))
+        set((state) => {
+          const existingItemIndex = state.cart.findIndex(
+            (item) => item.price_id === newItem.price_id
+          )
+          if (existingItemIndex !== -1) {
+            // If item exists, update quantity
+            const updatedCart = [...state.cart]
+            updatedCart[existingItemIndex].quantity += newItem.quantity
+            return { ...state, cart: updatedCart }
+          } else {
+            // If item doesn't exist, add new item
+            return { ...state, cart: [...state.cart, newItem] }
+          }
+        })
       },
       removeItemFromCart: (params) => {
         const { itemIndex } = params
@@ -34,6 +44,14 @@ const useCart = create(
           ...state,
           cart: state.cart.filter((_, index) => index !== itemIndex),
         }))
+      },
+      updateItemQuantity: (params) => {
+        const { itemIndex, newQuantity } = params
+        set((state) => {
+          const updatedCart = [...state.cart]
+          updatedCart[itemIndex].quantity = newQuantity
+          return { ...state, cart: updatedCart }
+        })
       },
       emptyCart: () => {
         set((state) => ({
