@@ -24,6 +24,7 @@ export default function RootLayout({ children }) {
       </head>
       <body
         className={`${roboto.className} min-h-screen flex flex-col relative`}
+        suppressHydrationWarning={true}
       >
         <Header />
         <div className="flex-1">{children}</div>
