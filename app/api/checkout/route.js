@@ -13,9 +13,12 @@ export async function POST(req) {
     const stripe = new Stripe(process.env.STRIPE_SECRET ?? "", {
       apiVersion: "2024-06-20",
     })
+
+    const baseUrl = process.env.BASE_URL || `https://${req.headers.get("host")}`
+
     const session = await stripe.checkout.sessions.create({
-      success_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/cancel",
+      success_url: `${baseUrl}/success`,
+      cancel_url: `${baseUrl}/cancel`,
       line_items: body.lineItems,
       mode: "payment",
     })
