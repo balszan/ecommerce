@@ -32,9 +32,7 @@ const useCart = create(
         const { itemIndex } = params
         set((state) => ({
           ...state,
-          cart: state.cart.filter(
-            (_, elementIndex) => elementIndex !== itemIndex
-          ),
+          cart: state.cart.filter((_, index) => index !== itemIndex),
         }))
       },
       emptyCart: () => {

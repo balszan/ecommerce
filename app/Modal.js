@@ -8,6 +8,7 @@ export default function Modal() {
   const cartItems = useCart((state) => state.cart)
   const openModal = useCart((state) => state.openModal)
   const isHydrated = useCart((state) => state.isHydrated)
+  const removeItemFromCart = useCart((state) => state.removeItemFromCart)
 
   useEffect(() => {
     setPortalRoot(document.getElementById("portal"))
@@ -44,6 +45,15 @@ export default function Modal() {
                         <p>${cartItem.cost / 100}</p>
                       </div>
                       <p className="text-slate-600 text-sm">Quantity: 1</p>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          removeItemFromCart({ itemIndex: itemIndex })
+                        }}
+                        className="bg-amber-500 text-white px-2 py-1 hover:bg-amber-600 w-[100px]"
+                      >
+                        Remove
+                      </button>
                     </div>
                   )
                 })}
