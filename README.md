@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FoodShop
 
-## Getting Started
+FoodShop is an e-commerce application that allows users to browse and purchase food items. It features a responsive design, a shopping cart system, and secure checkout integration with Stripe.
 
-First, run the development server:
+**Live demo:** [https://foodshop-ecommerce-825eabd2890d.herokuapp.com/](https://foodshop-ecommerce-825eabd2890d.herokuapp.com/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## How It's Made
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Tech used:** 
+- JavaScript
+- React
+- Next.js
+- Tailwind CSS
+- Zustand
+- Stripe API
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+The application is built with Next.js, providing a powerful React framework for both frontend and backend functionality. It uses Zustand for state management, offering a lightweight and intuitive solution for handling the shopping cart state across the application.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+FoodShop integrates with the Stripe API to process payments securely. The checkout process is seamlessly handled, allowing users to complete their purchases with confidence.
 
-## Learn More
+The user interface is styled using Tailwind CSS, ensuring a responsive and visually appealing design across various devices and screen sizes. The application features a dynamic cart system that updates in real-time as users add or remove items.
 
-To learn more about Next.js, take a look at the following resources:
+FoodShop implements best practices for web development, including:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Server-side rendering for improved performance and SEO
+- Client-side state management for a smooth user experience
+- Responsive design principles for cross-device compatibility
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Contact
 
-## Deploy on Vercel
+Karolina Balszan - [kbalszan@gmail.com](mailto:kbalszan@gmail.com)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[My LinkedIn Profile](https://www.linkedin.com/in/karolina-balszan/)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Happy shopping!
