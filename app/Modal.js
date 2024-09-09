@@ -20,7 +20,10 @@ export default function Modal() {
           <div className="flex items-center p-6 justify-between text-xl">
             <h1>Cart</h1>
             <i
-              onClick={closeModal}
+              onClick={(e) => {
+                e.stopPropagation()
+                closeModal()
+              }}
               className="fa-regular fa-rectangle-xmark cursor-pointer hover:opacity-60"
             ></i>
           </div>
