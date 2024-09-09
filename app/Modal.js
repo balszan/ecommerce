@@ -42,18 +42,20 @@ export default function Modal() {
                     <div key={itemIndex} className="flex flex-col gap-2">
                       <div className="flex items-center justify-between">
                         <h2>{cartItem.name}</h2>
-                        <p>${cartItem.cost / 100}</p>
+                        <p>{cartItem.cost / 100} £</p>
                       </div>
-                      <p className="text-slate-600 text-sm">Quantity: 1</p>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          removeItemFromCart({ itemIndex: itemIndex })
-                        }}
-                        className="bg-amber-500 text-white px-2 py-1 hover:bg-amber-600 w-[100px]"
-                      >
-                        Remove
-                      </button>
+                      <div className="flex items-center justify-between items-center">
+                        <p className="text-slate-600 text-sm">Quantity: 1</p>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            removeItemFromCart({ itemIndex: itemIndex })
+                          }}
+                          className=" text-sm bg-red-400 text-white p-1 hover:bg-red-500 w-[100px] shadow"
+                        >
+                          Remove
+                        </button>
+                      </div>
                     </div>
                   )
                 })}
