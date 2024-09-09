@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import ReactDOM from "react-dom"
 import useCart from "./(store)/store"
+import { useRouter } from "next/navigation"
 
 export default function Modal() {
   const [portalRoot, setPortalRoot] = useState(null)
@@ -9,6 +10,25 @@ export default function Modal() {
   const openModal = useCart((state) => state.openModal)
   const isHydrated = useCart((state) => state.isHydrated)
   const removeItemFromCart = useCart((state) => state.removeItemFromCart)
+  const router = useRouter()
+
+  async function checkout() {
+    const lineItems = cartItems.map((cartItem) => {
+      return {
+        price: cartItem.price_id,
+        quantity: 1,
+      }
+    })
+    const res = await fetch("/api/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ lineItems }),
+    })
+    const data = await res.json()
+    router.push(data.session.url)
+  }
 
   useEffect(() => {
     setPortalRoot(document.getElementById("portal"))
@@ -62,7 +82,10 @@ export default function Modal() {
               </>
             )}
           </div>
-          <div className="bg-amber-400 text-white text-xl m-4 p-4 uppercase grid place-items-center hover:opacity-60 cursor-pointer shadow-lg">
+          <div
+            onClick={checkout}
+            className=" bg-amber-400 text-white text-xl m-4 p-4 uppercase grid place-items-center hover:opacity-60 cursor-pointer shadow-lg"
+          >
             Checkout
           </div>
         </div>
